@@ -66,14 +66,14 @@
 
 2. Is your solution fair towards writer threads? In other words, does your solution ensure that if a writer  thread wants to write, then it will eventually do so? If so, explain why. If not, modify part 1. so that  your implementation satisfies this fairness requirement, and then explain why your new solution satisfies  the requirement
 
-	Yes the solution is fair to writer threads, because of the variable "waitingWriters", meaning that if a writer needs to write the readers will have to wait, as such the writers have priority.
+**Yes** the solution is fair to writer threads, because of the variable "waitingWriters", meaning that if a writer needs to write the readers will have to wait, as such the writers have priority.
+
 
 ##### Exercise 2.2
 1. Does your monitor implementation contain any condition variables? If you answer yes, explain how many  condition variables your monitor uses, how they are used in the monitor, and what method calls are used to  access them. If you answer no, explain why condition variables are not used in the monitor.
-
-	There's one implicit condition variable which can be interacted with through wait(), notify(), and notifyAll().
+	**There's** one implicit condition variable which can be interacted with through wait(), notify(), and notifyAll().
 	
-	Yes it can run forever, because there's not necessarily cache coherence. When a lock is used, flushing to main memory occurs. Here we can not guarantee it, and as such it's possible it will run forever. You can use volatile, because then the variable if flushed into main memory
+**Yes** it can run forever, because there's not necessarily cache coherence. When a lock is used, flushing to main memory occurs. Here we can not guarantee it, and as such it's possible it will run forever. You can use volatile, because then the variable if flushed into main memory, meaning that threads in other cores can access the updated variables.
 
 2. Use Java Intrinsic Locks (synchronized) on the methods of the MutableInteger to ensure that thread t always terminates. Explain why your solution prevents thread t from running forever
 	```java
@@ -89,10 +89,10 @@
 	```
 
 3. Would thread t always terminate if get() is not defined as synchronized? Explain your answer.
-	The `get` will use a cached value, probably cpu caches or in a register. These are not updated when the set is called, and as such the code never terminates.
+	**The** `get` will use a cached value, probably cpu caches or in a register. These are not updated when the set is called, and as such the code never terminates.
    
 4. Remove all the locks in the program, and define value in MutableInteger as a volatile variable.  Does thread t always terminate in this case? Explain your answer.
-	You can use volatile, because then the variable if flushed into main memory.
+	**You** can use volatile, because then the variable if flushed into main memory, thus making it visible to the other threads.
 
 ##### Exercise 2.3
 1. Execute the program several times. Show the results you get. Are there any race conditions?
@@ -106,7 +106,7 @@
 
 2. Explain why race conditions appear when t1 and t2 use the Mystery object. Hint: Consider (a) what it  means for an instance method to be synchronized, and (b) what it means for a static method to be synchronized.
 
-	The locks are on the class monitor, and the instance method. These are two different locks, and as such they don't have an impact on each other. To fix this we can change so they are both either static or non-static.
+	**The** locks are on the class monitor, and the instance method. These are two different locks, and as such they don't have an impact on each other. To fix this we can change so they are both either static or non-static.
 
 3. Implement a new version of the class Mystery so that the execution of t1 and t2 does not produce race conditions, without changing the modifiers of the field and methods in the Mystery class. That is, you  should not make any static field into an instance field (or vice versa), and you should not make any static method into an instance method (or vice versa).
 
@@ -134,8 +134,8 @@
 	}
 	```
 
-	The two additions are mutually exclusive so interleavings wont happen, and such there is no data race.
+	**The** two additions are mutually exclusive so interleavings wont happen, and such there is no data race.
 
 4. Note that the method sum() also uses an intrinsic lock. Is the use of this intrinsic lock on sum() necessary for this program? In other words, would there be race conditions if you remove the modifier synchronized from sum() (assuming that you have fixed the race conditions in 3.)
 
-	There are no race conditions without the synchronized due to the locking in this program, and the fact that sum is static so that it's in the same place, so caching will not affect the program.
+	**There** are no race conditions without the synchronized due to the locking in this program, and the fact that sum is static so that it's in the same place, so caching will not affect the program.
